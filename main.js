@@ -4,6 +4,7 @@ leftWristX = 0;
 leftWristY = 0;
 rightWristX = 0;
 rightWristY = 0;
+scoreleftwrist = 0; 
 
 function preload(){
    song1 = loadSound("music.mp3");
@@ -16,16 +17,41 @@ function setup(){
 
     video = createCapture(VIDEO);
     video.hide();
+    poseNet = ml5.poseNet(video,modelLoaded);
+    poseNet.on('pose', gotPoses);
 }
+
+function modelLoaded(){
+    console.log("poseNet is initialized");
+}
+
 
 function draw(){
     image(video, 0, 0, 500, 400);
+    fill("#FF0000");
+    stroke("#FF0000");
+    if(scoreleftwrist > 0.2){
+        circle(leftWristX,leftWristY,20);
+        if(song2.isPlaying()){
+            song2.stop();
+            song1.play();
+            song1.setVolume(1);
+            song1.rate(1);
+            document.getElementById("song").innerHTML = "playing Peter Pan Song";
+        }
+        else{
+            song1.play();
+            song1.setVolume(1);
+            song1.rate(1);
+            document.getElementById("song").innerHTML = "playing Peter Pan Song";
+        }
+    }
 }
 
 function play(){
-   song1.play();
-   song1.setVolume(1);
-   song1.rate(1);
+   song2.play();
+   song2.setVolume(1);
+   song2.rate(1);
 }
 
 function gotPoses(results){
@@ -37,5 +63,8 @@ function gotPoses(results){
         rightWristY = results[0].pose.rightWrist.y;
         console.log("left wrist X =" + leftWristX + ", left Wrist Y ="+ leftWristY);
         console.log("right wrist X =" + rightWristX + ", right Wrist Y ="+ rightWristY);
+        scoreleftwrist = results[0].pose.keypoints[9].score;
+        console.log("score left wrist = "+ scoreleftwrist);
+
     }
 }
