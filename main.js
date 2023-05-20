@@ -38,7 +38,7 @@ function draw(){
             song1.play();
             song1.setVolume(1);
             song1.rate(1);
-            document.getElementById("song").innerHTML = "playing Peter Pan Song";
+            document.getElementById("song").innerHTML = "playing Harry Potter theme Song";
         }
     }
     if(scorerightwrist > 0.2){
@@ -48,7 +48,7 @@ function draw(){
             song2.play();
             song2.setVolume(1);
             song2.rate(1);
-            document.getElementById("song").innerHTML = "playing Harry Potter theme Song";
+            document.getElementById("song").innerHTML = "playing Peter Pan Song";
         }
     }
 }
